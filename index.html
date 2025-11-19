@@ -1,52 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz</title>
+</head>
+<body>
+  <div id="quiz-container">
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+  </div>
 
-We'll create a basic quiz format with questions, options, and answers. We'll use JavaScript to check the answers.
+  <script>
+    const questions = [
+      {
+        question: "What's the largest planet in our solar system?",
+        options: ["A) Earth", "B) Saturn", "C) Jupiter", "D) Uranus"],
+        answer: "C) Jupiter"
+      },
+      {
+        question: "Which musician is known as the King of Rock and Roll?",
+        options: ["A) Chuck Berry", "B) Elvis Presley", "C) Little Richard", "D) Jerry Lee Lewis"],
+        answer: "B) Elvis Presley"
+      },
+      {
+        question: "What's the chemical symbol for gold?",
+        options: ["A) Ag", "B) Au", "C) Hg", "D) Pb"],
+        answer: "B) Au"
+      },
+      {
+        question: "Who wrote the famous novel 'To Kill a Mockingbird'?",
+        options: ["A) F. Scott Fitzgerald", "B) Harper Lee", "C) Jane Austen", "D) J.K. Rowling"],
+        answer: "B) Harper Lee"
+      },
+      {
+        question: "What's the smallest country in the world?",
+        options: ["A) Vatican City", "B) Monaco", "C) Nauru", "D) Tuvalu"],
+        answer: "A) Vatican City"
+      }
+    ];
 
-Here's the code:
+    let currentQuestion = 0;
+    let score = 0;
 
-<div id="quiz-container">
- <div id="question"></div>
- <div id="options"></div>
- <button id="submit">Submit</button>
- <div id="result"></div>
-</div>
+    function displayQuestion() {
+      const questionElement = document.getElementById("question");
+      const optionsElement = document.getElementById("options");
+      questionElement.innerText = questions[currentQuestion].question;
+      optionsElement.innerHTML = "";
+      questions[currentQuestion].options.forEach(option => {
+        const button = document.createElement("button");
+        button.innerText = option;
+        button.onclick = checkAnswer;
+        optionsElement.appendChild(button);
+      });
+    }
 
-<script>
- const questions =;
+    function checkAnswer(event) {
+      const selectedAnswer = event.target.innerText;
+      if (selectedAnswer === questions[currentQuestion].answer) {
+        score++;
+        document.getElementById("result").innerText = "Correct!";
+      } else {
+        document.getElementById("result").innerText = Incorrect! The correct answer is ${questions[currentQuestion].answer}.;
+      }
+      currentQuestion++;
+      if (currentQuestion >= questions.length) {
+        document.getElementById("question").innerText = "Quiz finished!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("result").innerText = Your final score is ${score} out of ${questions.length}.;
+      } else {
+        displayQuestion();
+      }
+    }
 
- let currentQuestion = 0;
- let score = 0;
-
- function displayQuestion() {
- const questionElement = document.getElementById("question");
- const optionsElement = document.getElementById("options");
- questionElement.innerText = questions.question;
- optionsElement.innerHTML = "";
- questions.options.forEach(option => {
- const button = document.createElement("button");
- button.innerText = option;
- button.onclick = checkAnswer;
- optionsElement.appendChild(button);
- });
- }
-
- function checkAnswer(event) {
- const selectedAnswer = event.target.innerText;
- if (selectedAnswer === questions.answer) {
- score++;
- document.getElementById("result").innerText = "Correct!";
- } else {
- document.getElementById("result").innerText = `Incorrect! The correct answer is ${questions.answer}.`;
- }
- currentQuestion++;
- if (currentQuestion >= questions.length) {
- document.getElementById("question").innerText = "Quiz finished!";
- document.getElementById("options").innerHTML = "";
- document.getElementById("submit").style.display = "none";
- document.getElementById("result").innerText = `Your final score is ${score} out of ${questions.length}.`;
- } else {
- displayQuestion();
- }
- }
-
- displayQuestion();
-</script>
+    displayQuestion();
+  </script>
+</body>
+</html>
